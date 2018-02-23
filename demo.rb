@@ -10,7 +10,7 @@ begin
 
   puts "--------"
 
-  puts movies.filter(release_year: 2015, title: 'Mad')
+  puts movies.filter(release_year: 2010..2015, genre: /Comedy/i, actors: /Ralph/i)
 
   puts "--------"
 
