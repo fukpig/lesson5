@@ -1,6 +1,8 @@
 require './movie_collection.rb'
 movies = MovieCollection.new("movies.txt")
 
+puts movies.filter(release_year: 2010..2015, genre: /Comedy/i, actors: /Ralph/i)
+=begin
 begin
   puts movies.all.first(5)
 
@@ -25,5 +27,7 @@ begin
   puts movies.all.first.has_genre? "Tragedy"
 
 rescue Exception => e
-  puts "get error \"#{e}\""
+  puts e.message
 end
+
+=end
