@@ -30,7 +30,7 @@ class MovieCollection
   end
 
   def inspect
-    "#<MovieCollection(movies: #{@movies})>"
+    "#<MovieCollection movies: #{@movies}>"
   end
 
   def all
