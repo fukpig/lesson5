@@ -1,6 +1,13 @@
 # define class  Movie
-require './errors/genre_not_found.rb'
 class Movie
+  class GenreNotFound < ArgumentError
+    attr_reader :genre
+      def initialize(genre)
+        @genre = genre
+        super("Genre #{genre} not found")
+    end
+  end
+
   attr_reader :href, :title, :release_year, :country, :release_date, :genre, :full_duration_definition, :duration, :duration_definition, :rating, :director, :actors, :movie_collection
 
   def initialize(args, movie_collection)
@@ -19,7 +26,11 @@ class Movie
   end
 
   def inspect
-    "Movie(\"#{@title}\" (#{@release_year}))"
+    "#<Movie \"#{@title}\" (#{@release_year})>"
+  end
+
+  def matches?(key, value)
+    Array(send(key)).any? { |v| value === v}
   end
 
   private

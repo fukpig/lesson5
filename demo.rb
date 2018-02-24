@@ -1,8 +1,6 @@
 require './movie_collection.rb'
 movies = MovieCollection.new("movies.txt")
 
-puts movies.filter(release_year: 2010..2015, genre: /Comedy/i, actors: /Ralph/i)
-=begin
 begin
   puts movies.all.first(5)
 
@@ -29,5 +27,3 @@ begin
 rescue Exception => e
   puts e.message
 end
-
-=end

@@ -1,8 +1,19 @@
+# define class  MovieCollection
+
 require 'csv'
 require './movie.rb'
-require './errors/file_not_found.rb'
-# define class  MovieCollection
+
+
 class MovieCollection
+
+  class FileNotFound < ArgumentError
+    attr_reader :filename
+      def initialize(filename)
+        @filename = filename
+        super("File #{filename} not found")
+    end
+  end
+
   attr_reader :movies, :genres
 
   FILM_HASH_KEYS = %i[href title release_year country release_date genre full_duration_definition rating director actors]
@@ -30,22 +41,8 @@ class MovieCollection
       @movies.sort_by(&field)
   end
 
-  def filter(hash)
-    filtered = @movies
-    hash.map do |key, value|
-      filtered = filtered.reduce([]) { |array, movie| Array(movie.send(key)).any? { |v| value === v} ?  array.push(movie) : array }
-    end
-    return filtered
-
-=begin
-    filtered = @movies
-    hash.map do |key, value|
-      filtered = filtered.select do |m|
-        Array(m.send(key)).any? { |v| value === v}
-      end
-    end
-    return filtered
-=end
+  def filter(filters)
+    filters.reduce(@movies) { |filtered, (key, value)| filtered.select { |m| m.matches?(key, value) } }
   end
 
   def stats(field)
